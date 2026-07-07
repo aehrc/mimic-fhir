@@ -96,3 +96,31 @@ def test_generate_all_codesystems(db_conn, meta, terminology_path):
 def test_generate_all_valuesets(db_conn, meta, terminology_path):
     trm.generate_valuesets(db_conn, meta, terminology_path)
     assert True
+
+
+#----------------------------------------------------------------
+#--------------- COMPLETE DISPLAY TERMS FEATURE -----------------
+#----------------------------------------------------------------
+
+# The three code systems below have SQL scripts, description rows, committed
+# resources, and validation tests, but were dropped from the batch generation
+# list in a past refactor. They must be restored to MIMIC_CODESYSTEMS so that
+# "all code systems" genuinely covers all 39, and so the batch generator emits
+# them again (FR-012).
+DROPPED_CODESYSTEMS = [
+    'identifier_type', 'lab_flags', 'microbiology_interpretation'
+]
+
+
+@pytest.mark.parametrize('codesystem', DROPPED_CODESYSTEMS)
+def test_dropped_codesystem_in_generation_list(codesystem):
+    # Regression guard: each restored code system must be present in the batch
+    # generation list.
+    assert codesystem in MIMIC_CODESYSTEMS
+
+
+@pytest.mark.parametrize('codesystem', DROPPED_CODESYSTEMS)
+def test_dropped_codesystem_generates(db_conn, meta, codesystem):
+    # Each restored code system must generate a valid CodeSystem resource.
+    generated = trm.generate_codesystem(codesystem, db_conn, meta)
+    assert generated.resource_type == 'CodeSystem'
