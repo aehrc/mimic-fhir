@@ -412,7 +412,7 @@ def location_bundle_resources(db_conn):
 # Initialize terminology meta data
 @pytest.fixture(scope="session")
 def meta(db_conn):
-    meta = TerminologyMetaData(db_conn)
+    meta = trm.TerminologyMetaData(db_conn)
     return meta
 
 
