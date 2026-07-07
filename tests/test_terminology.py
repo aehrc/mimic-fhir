@@ -147,16 +147,12 @@ def _find_concept(generated, code):
     return None
 
 
-# Systems whose richer display source is delivered by a later user story: the
-# medication codes gain adjacent drug/product names in US2, and the coded
-# abbreviations gain documented expansions in US3. Until their story lands they
-# emit code-only, so the completeness invariant is expected to fail for them.
-# Each entry is removed as its owning story is implemented, and the strict xfail
-# guarantees the entry cannot be left behind once the system is complete.
-PENDING_DISPLAY_SYSTEMS = {
-    'services': 'US3 documented service map',
-    'microbiology_interpretation': 'US3 documented S/R/I/P map',
-}
+# Systems whose richer display source was delivered incrementally across the
+# user stories (US2 medication names, US3 documented expansions). All are now
+# complete, so the completeness invariant below holds for every code system and
+# this set is empty. A non-empty entry marks a system as a strict xfail so it
+# cannot silently regress or be left incomplete.
+PENDING_DISPLAY_SYSTEMS = {}
 
 
 def _completeness_params():
@@ -357,3 +353,82 @@ def test_medication_formulary_drug_cd_display_from_both_sources(db_conn, meta):
     # Confirm each source column is genuinely surfaced by an isolated code.
     assert presc_only > 0, 'a prescriptions.drug name must be surfaced'
     assert emar_only > 0, 'an emar_detail.product_description must be surfaced'
+
+
+# ---- User Story 3: documented expansions for coded abbreviations ----
+
+# The MIMIC-IV documented service-name expansions (hosp/services). Held here so
+# the test and the SQL map are checked against the same authoritative source.
+DOCUMENTED_SERVICES = {
+    'CMED': 'Cardiac Medical',
+    'CSURG': 'Cardiac Surgery',
+    'DENT': 'Dental',
+    'ENT': 'Ear, Nose, and Throat',
+    'EYE': 'Eye',
+    'GU': 'Genitourinary',
+    'GYN': 'Gynecological',
+    'MED': 'Medical',
+    'NB': 'Newborn',
+    'NBB': 'Newborn Baby',
+    'NMED': 'Neurologic Medical',
+    'NSURG': 'Neurologic Surgical',
+    'OBS': 'Obstetrics',
+    'OMED': 'Oncologic Medical',
+    'ORTHO': 'Orthopaedic',
+    'PSURG': 'Plastic',
+    'PSYCH': 'Psychiatric',
+    'SURG': 'Surgical',
+    'TRAUM': 'Trauma',
+    'TSURG': 'Thoracic Surgical',
+    'VSURG': 'Vascular Surgical',
+}
+
+# The MIMIC-IV documented antibiotic-sensitivity interpretation codes.
+DOCUMENTED_INTERPRETATIONS = {
+    'S': 'Sensitive',
+    'R': 'Resistant',
+    'I': 'Intermediate',
+    'P': 'Pending',
+}
+
+
+def _concept_map(generated):
+    return {
+        _concept_field(c, 'code'): _concept_field(c, 'display')
+        for c in _concepts(generated)
+    }
+
+
+def test_services_documented_expansions(db_conn, meta):
+    # SC-003 / FR-005: documented service codes show their documented expansion;
+    # a code absent from the map falls back to the code.
+    concepts = _concept_map(trm.generate_codesystem('services', db_conn, meta))
+    # Headline examples from the spec.
+    assert concepts.get('CMED') == 'Cardiac Medical'
+    assert concepts.get('TRAUM') == 'Trauma'
+    for code, display in concepts.items():
+        if code in DOCUMENTED_SERVICES:
+            assert display == DOCUMENTED_SERVICES[code], (
+                f'service {code}: display {display!r} != '
+                f'documented {DOCUMENTED_SERVICES[code]!r}'
+            )
+        else:
+            # A service code not in the documented map falls back to the code.
+            assert display == code
+
+
+def test_microbiology_interpretation_documented_expansions(db_conn, meta):
+    # SC-003 / FR-005: documented interpretation codes show their expansion; a
+    # code absent from the map falls back to the code.
+    concepts = _concept_map(
+        trm.generate_codesystem('microbiology_interpretation', db_conn, meta)
+    )
+    # S/R/I are present in the demo (P is documented but absent from the demo).
+    assert concepts.get('S') == 'Sensitive'
+    assert concepts.get('R') == 'Resistant'
+    assert concepts.get('I') == 'Intermediate'
+    for code, display in concepts.items():
+        if code in DOCUMENTED_INTERPRETATIONS:
+            assert display == DOCUMENTED_INTERPRETATIONS[code]
+        else:
+            assert display == code
