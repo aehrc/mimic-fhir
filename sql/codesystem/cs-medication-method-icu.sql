@@ -3,9 +3,11 @@
 
 DROP TABLE IF EXISTS fhir_trm.cs_medication_method_icu;
 CREATE TABLE fhir_trm.cs_medication_method_icu(
-    code      VARCHAR NOT NULL
+    code      VARCHAR NOT NULL,
+    display   VARCHAR NOT NULL
 );
 
 INSERT INTO fhir_trm.cs_medication_method_icu
-SELECT DISTINCT TRIM(ordercategorydescription)
-FROM mimiciv_icu.inputevents; 
+SELECT DISTINCT TRIM(ordercategorydescription) AS code,
+    TRIM(ordercategorydescription) AS display
+FROM mimiciv_icu.inputevents;

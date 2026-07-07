@@ -9,8 +9,9 @@ CREATE TABLE fhir_trm.cs_hcpcs_cd(
 );
 
 INSERT INTO fhir_trm.cs_hcpcs_cd 
-SELECT DISTINCT  
+SELECT
     hcpcs_cd AS code
-    , short_description AS display
-FROM mimiciv_hosp.hcpcsevents  
-WHERE hcpcs_cd IS NOT NULL;
+    , COALESCE(NULLIF(TRIM(MAX(short_description)), ''), hcpcs_cd) AS display
+FROM mimiciv_hosp.hcpcsevents
+WHERE hcpcs_cd IS NOT NULL
+GROUP BY hcpcs_cd;

@@ -16,7 +16,8 @@ WITH cs_medrecon AS (
 )
 INSERT INTO fhir_trm.cs_medication_etc SELECT
     TRIM(cs_code) AS code
-    , MAX(cs_display) AS display -- grab one description
+    -- Grab one description, else fall back to the code.
+    , COALESCE(NULLIF(TRIM(MAX(cs_display)), ''), TRIM(cs_code)) AS display
 FROM cs_medrecon
 WHERE cs_code IS NOT NULL
 GROUP BY cs_code

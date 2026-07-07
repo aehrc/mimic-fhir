@@ -5,14 +5,14 @@
 DROP TABLE IF EXISTS fhir_trm.cs_chartevents_d_items;
 CREATE TABLE fhir_trm.cs_chartevents_d_items(
     code      VARCHAR NOT NULL,
-    display   VARCHAR
+    display   VARCHAR NOT NULL
 );
 
 INSERT INTO fhir_trm.cs_chartevents_d_items
-SELECT DISTINCT 
+SELECT
     itemid AS code
-    , label AS display
-FROM 
-    mimiciv_icu.d_items di 
+    , COALESCE(NULLIF(TRIM(MAX(label)), ''), itemid::text) AS display
+FROM
+    mimiciv_icu.d_items di
 WHERE linksto = 'chartevents'
-            
+GROUP BY itemid

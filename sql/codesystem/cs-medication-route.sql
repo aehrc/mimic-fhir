@@ -4,7 +4,8 @@
 
 DROP TABLE IF EXISTS fhir_trm.cs_medication_route;
 CREATE TABLE fhir_trm.cs_medication_route(
-    code      VARCHAR NOT NULL
+    code      VARCHAR NOT NULL,
+    display   VARCHAR NOT NULL
 );
 
 
@@ -14,6 +15,6 @@ WITH med_routes AS (
     SELECT DISTINCT TRIM(route) AS route FROM mimiciv_hosp.pharmacy
 ) 
 INSERT INTO fhir_trm.cs_medication_route
-SELECT route
+SELECT route, route AS display
 FROM med_routes
 WHERE route IS NOT NULL

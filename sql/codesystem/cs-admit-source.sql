@@ -3,7 +3,8 @@
 
 DROP TABLE IF EXISTS fhir_trm.cs_admit_source;
 CREATE TABLE fhir_trm.cs_admit_source(
-    code      VARCHAR NOT NULL
+    code      VARCHAR NOT NULL,
+    display   VARCHAR NOT NULL
 );
 
 WITH mimic_admit_source AS (
@@ -16,7 +17,7 @@ WITH mimic_admit_source AS (
     SELECT DISTINCT arrival_transport AS code FROM mimiciv_ed.edstays 
 )
 INSERT INTO fhir_trm.cs_admit_source
-SELECT code
+SELECT code, code AS display
 FROM mimic_admit_source
 WHERE 
     code IS NOT NULL 

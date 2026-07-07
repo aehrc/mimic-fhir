@@ -3,7 +3,8 @@
 
 DROP TABLE IF EXISTS fhir_trm.cs_medication_name;
 CREATE TABLE fhir_trm.cs_medication_name(
-    code      VARCHAR NOT NULL
+    code      VARCHAR NOT NULL,
+    display   VARCHAR NOT NULL
 );
 
 WITH medication_name AS (
@@ -28,7 +29,7 @@ WITH medication_name AS (
 )
 
 INSERT INTO fhir_trm.cs_medication_name
-SELECT code
+SELECT code, code AS display
 FROM medication_name
 WHERE 
     code IS NOT NULL 

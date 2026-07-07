@@ -6,17 +6,20 @@
 DROP TABLE IF EXISTS fhir_trm.cs_procedure_icd10;
 CREATE TABLE fhir_trm.cs_procedure_icd10(
     code      VARCHAR NOT NULL,
-    display   VARCHAR
+    display   VARCHAR NOT NULL
 );
 
 INSERT INTO fhir_trm.cs_procedure_icd10
-SELECT DISTINCT 
+SELECT
     TRIM(proc.icd_code) AS code
-    , icd.long_title AS display
-FROM 
+    -- Fall back to the code where the ICD dictionary has no title, and group to
+    -- one row per code where a title differs slightly across sources.
+    , COALESCE(NULLIF(TRIM(MAX(icd.long_title)), ''), TRIM(proc.icd_code)) AS display
+FROM
     mimiciv_hosp.procedures_icd proc
     LEFT JOIN mimiciv_hosp.d_icd_procedures icd
-        ON proc.icd_code = icd.icd_code 
-        AND proc.icd_version = icd.icd_version 
+        ON proc.icd_code = icd.icd_code
+        AND proc.icd_version = icd.icd_version
 WHERE proc.icd_version = 10
+GROUP BY TRIM(proc.icd_code)
 

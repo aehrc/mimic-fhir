@@ -3,10 +3,12 @@
 
 DROP TABLE IF EXISTS fhir_trm.cs_medication_frequency;
 CREATE TABLE fhir_trm.cs_medication_frequency(
-    code      VARCHAR NOT NULL
+    code      VARCHAR NOT NULL,
+    display   VARCHAR NOT NULL
 );
 
 INSERT INTO fhir_trm.cs_medication_frequency
-SELECT DISTINCT TRIM(REGEXP_REPLACE(frequency, '\s+', ' ', 'g')) AS code 
-FROM mimiciv_hosp.pharmacy p 
+SELECT DISTINCT TRIM(REGEXP_REPLACE(frequency, '\s+', ' ', 'g')) AS code,
+    TRIM(REGEXP_REPLACE(frequency, '\s+', ' ', 'g')) AS display
+FROM mimiciv_hosp.pharmacy p
 WHERE frequency IS NOT NULL;

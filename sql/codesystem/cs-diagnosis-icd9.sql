@@ -33,9 +33,11 @@ WITH icd9_codes AS (
     WHERE icd_version = 9   
 )
 INSERT INTO fhir_trm.cs_diagnosis_icd9
-SELECT 
+SELECT
     code
-    , MAX(display) -- sometimes display IS slightly different (caps or lowercase)
+    -- Fall back to the code where the ICD dictionary has no title; sometimes
+    -- the display differs slightly across sources (caps or lowercase).
+    , COALESCE(NULLIF(TRIM(MAX(display)), ''), code) AS display
 FROM icd9_codes
 GROUP BY code
 

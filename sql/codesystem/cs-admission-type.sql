@@ -3,10 +3,11 @@
 
 DROP TABLE IF EXISTS fhir_trm.cs_admission_type;
 CREATE TABLE fhir_trm.cs_admission_type(
-    code      VARCHAR NOT NULL
+    code      VARCHAR NOT NULL,
+    display   VARCHAR NOT NULL
 );
 
 INSERT INTO fhir_trm.cs_admission_type
-SELECT DISTINCT admission_type 
-FROM mimiciv_hosp.admissions 
+SELECT DISTINCT admission_type AS code, admission_type AS display
+FROM mimiciv_hosp.admissions
 WHERE admission_type != ''

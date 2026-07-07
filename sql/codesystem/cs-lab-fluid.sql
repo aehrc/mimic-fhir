@@ -3,9 +3,10 @@
 
 DROP TABLE IF EXISTS fhir_trm.cs_lab_fluid;
 CREATE TABLE fhir_trm.cs_lab_fluid(
-    code      VARCHAR NOT NULL
+    code      VARCHAR NOT NULL,
+    display   VARCHAR NOT NULL
 );
 
 INSERT INTO fhir_trm.cs_lab_fluid
-SELECT DISTINCT fluid
+SELECT DISTINCT fluid AS code, fluid AS display
 FROM mimiciv_hosp.d_labitems;

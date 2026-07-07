@@ -3,7 +3,8 @@
 
 DROP TABLE IF EXISTS fhir_trm.cs_units;
 CREATE TABLE fhir_trm.cs_units(
-    code      VARCHAR NOT NULL
+    code      VARCHAR NOT NULL,
+    display   VARCHAR NOT NULL
 );
 
 
@@ -39,7 +40,7 @@ WITH mimic_units AS (
 
 )
 INSERT INTO fhir_trm.cs_units
-SELECT DISTINCT unit
+SELECT DISTINCT unit, unit AS display
 FROM mimic_units
 WHERE 
     unit IS NOT NULL 

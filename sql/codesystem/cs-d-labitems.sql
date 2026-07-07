@@ -5,11 +5,12 @@
 DROP TABLE IF EXISTS fhir_trm.cs_d_labitems;
 CREATE TABLE fhir_trm.cs_d_labitems(
     code      VARCHAR NOT NULL,
-    display   VARCHAR --Can have NULL display IF itemid still present
+    display   VARCHAR NOT NULL
 );
 
 INSERT INTO fhir_trm.cs_d_labitems
-SELECT 
+SELECT
     itemid AS code
-    , label AS display
-FROM mimiciv_hosp.d_labitems 
+    , COALESCE(NULLIF(TRIM(MAX(label)), ''), itemid::text) AS display
+FROM mimiciv_hosp.d_labitems
+GROUP BY itemid

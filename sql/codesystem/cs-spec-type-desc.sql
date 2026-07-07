@@ -8,8 +8,9 @@ CREATE TABLE fhir_trm.cs_spec_type_desc(
 );
 
 INSERT INTO fhir_trm.cs_spec_type_desc
-SELECT DISTINCT 
+SELECT
     spec_itemid AS code
-    , spec_type_desc AS display
+    , COALESCE(NULLIF(TRIM(MAX(spec_type_desc)), ''), spec_itemid::text) AS display
 FROM mimiciv_hosp.microbiologyevents
-WHERE spec_type_desc != '';
+WHERE spec_type_desc != ''
+GROUP BY spec_itemid;

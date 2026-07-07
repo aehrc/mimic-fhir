@@ -3,7 +3,8 @@
 
 DROP TABLE IF EXISTS fhir_trm.cs_discharge_disposition;
 CREATE TABLE fhir_trm.cs_discharge_disposition(
-    code      VARCHAR NOT NULL
+    code      VARCHAR NOT NULL,
+    display   VARCHAR NOT NULL
 );
 
 WITH mimic_discharge_disposition AS (
@@ -16,7 +17,7 @@ WITH mimic_discharge_disposition AS (
     SELECT DISTINCT disposition AS code FROM mimiciv_ed.edstays 
 )
 INSERT INTO fhir_trm.cs_discharge_disposition
-SELECT code
+SELECT code, code AS display
 FROM mimic_discharge_disposition
 WHERE 
     code IS NOT NULL 

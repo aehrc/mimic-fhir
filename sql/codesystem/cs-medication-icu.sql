@@ -8,9 +8,10 @@ CREATE TABLE fhir_trm.cs_medication_icu(
 );
 
 INSERT INTO fhir_trm.cs_medication_icu
-SELECT 
+SELECT
     itemid AS code
-    , LABEL AS display
-FROM mimiciv_icu.d_items 
+    , COALESCE(NULLIF(TRIM(MAX(label)), ''), itemid::text) AS display
+FROM mimiciv_icu.d_items
 WHERE linksto='inputevents'
+GROUP BY itemid
 

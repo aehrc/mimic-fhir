@@ -4,9 +4,10 @@
 
 DROP TABLE IF EXISTS fhir_trm.cs_procedure_category;
 CREATE TABLE fhir_trm.cs_procedure_category(
-    code      VARCHAR NOT NULL
+    code      VARCHAR NOT NULL,
+    display   VARCHAR NOT NULL
 );
 
 INSERT INTO fhir_trm.cs_procedure_category
-SELECT DISTINCT ordercategoryname 
-FROM mimiciv_icu.procedureevents p 
+SELECT DISTINCT ordercategoryname AS code, ordercategoryname AS display
+FROM mimiciv_icu.procedureevents p
