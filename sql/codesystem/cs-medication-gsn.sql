@@ -4,17 +4,23 @@
 
 DROP TABLE IF EXISTS fhir_trm.cs_medication_gsn;
 CREATE TABLE fhir_trm.cs_medication_gsn(
-    code      VARCHAR NOT NULL
+    code      VARCHAR NOT NULL,
+    display   VARCHAR NOT NULL
 );
 
+-- The medication name lives alongside the GSN in medrecon/pyxis; take one per
+-- code deterministically and fall back to the code where absent.
 WITH mimic_gsn AS (
-    SELECT DISTINCT gsn FROM mimiciv_ed.medrecon
+    SELECT DISTINCT gsn, name FROM mimiciv_ed.medrecon
     UNION
-    SELECT DISTINCT gsn FROM mimiciv_ed.pyxis
+    SELECT DISTINCT gsn, name FROM mimiciv_ed.pyxis
 )
 INSERT INTO fhir_trm.cs_medication_gsn
-SELECT gsn AS code
+SELECT
+    gsn AS code
+    , COALESCE(NULLIF(TRIM(MAX(name)), ''), gsn) AS display
 FROM mimic_gsn
-WHERE 
-    gsn IS NOT NULL 
+WHERE
+    gsn IS NOT NULL
     AND gsn != '0'
+GROUP BY gsn
