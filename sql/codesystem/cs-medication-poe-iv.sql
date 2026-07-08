@@ -1,6 +1,7 @@
 -- Medication Poe IV CodeSystem
 -- IV medication requests, originating in POE
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_medication_poe_iv;
 CREATE TABLE fhir_trm.cs_medication_poe_iv(
     code      VARCHAR NOT NULL,

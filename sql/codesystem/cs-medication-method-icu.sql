@@ -1,6 +1,7 @@
 -- Medication Method ICU CodeSystem
 -- Could map to SNOMED codes - http://hl7.org/fhir/valueset-administration-method-codes.html
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_medication_method_icu;
 CREATE TABLE fhir_trm.cs_medication_method_icu(
     code      VARCHAR NOT NULL,

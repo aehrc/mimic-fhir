@@ -1,6 +1,7 @@
 -- Lab priority CodeSystem
 -- No mapping for priority in ObservationLab, so this will be bound to an extension
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_lab_priority;
 CREATE TABLE fhir_trm.cs_lab_priority(
     code      VARCHAR NOT NULL,

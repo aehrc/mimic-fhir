@@ -1,6 +1,7 @@
 -- Lab fluid CodeSystem
 -- Codes will need to be mapped to something like the Specimen type example-v2 - http://terminology.hl7.org/ValueSet/v2-0487
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_lab_fluid;
 CREATE TABLE fhir_trm.cs_lab_fluid(
     code      VARCHAR NOT NULL,

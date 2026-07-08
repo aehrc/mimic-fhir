@@ -1,5 +1,6 @@
 -- Microbiology Test Codesystem
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_microbiology_test;
 CREATE TABLE fhir_trm.cs_microbiology_test(
     code      VARCHAR NOT NULL,

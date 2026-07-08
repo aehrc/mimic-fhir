@@ -2,6 +2,7 @@
 -- Convert lab items to LOINC in concept mapping step
 
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_d_labitems;
 CREATE TABLE fhir_trm.cs_d_labitems(
     code      VARCHAR NOT NULL,

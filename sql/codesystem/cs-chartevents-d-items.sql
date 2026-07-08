@@ -2,6 +2,7 @@
 -- This is pulled from the d-items CodeSystem, map to LOINC codes http://hl7.org/fhir/valueset-observation-codes.html
 
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_chartevents_d_items;
 CREATE TABLE fhir_trm.cs_chartevents_d_items(
     code      VARCHAR NOT NULL,

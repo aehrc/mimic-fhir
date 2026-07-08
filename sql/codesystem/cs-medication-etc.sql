@@ -2,6 +2,7 @@
 -- Enhanced Therapeutic Class codes will need to be mapped in future to a standard medication system (ie using rxnorm)
 -- ETC codes pulled in from mimiciv_ed.medrecon mimiciv_ed.pyxis
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_medication_etc;
 CREATE TABLE fhir_trm.cs_medication_etc(
     code      VARCHAR PRIMARY KEY

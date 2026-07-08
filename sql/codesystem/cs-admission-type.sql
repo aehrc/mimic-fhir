@@ -1,6 +1,7 @@
 -- Admission type CodeSystem
 -- Codes will need to be mapped to match US Core Encounter Type -http://hl7.org/fhir/ValueSet/encounter-type
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_admission_type;
 CREATE TABLE fhir_trm.cs_admission_type(
     code      VARCHAR NOT NULL,

@@ -1,6 +1,7 @@
 -- Medication ICU CodeSystem
 -- Medication used in the ICU, will need to be concept mapped to a standard meds codesystem later
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_medication_icu;
 CREATE TABLE fhir_trm.cs_medication_icu(
     code      VARCHAR NOT NULL,

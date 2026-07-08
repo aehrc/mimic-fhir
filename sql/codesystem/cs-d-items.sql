@@ -2,6 +2,7 @@
 -- Will be referenced by procedureevents, datetimeevents, and outputevents
 -- chartevents too large, an individual codesystem created for it
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_d_items;
 CREATE TABLE fhir_trm.cs_d_items(
     code      VARCHAR NOT NULL,

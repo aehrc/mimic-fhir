@@ -1,6 +1,7 @@
 -- Medication Site Codesystem
 -- Need to map out to SNOMED route codes - http://hl7.org/fhir/valueset-route-codes.html
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_medication_site;
 CREATE TABLE fhir_trm.cs_medication_site(
     code      VARCHAR NOT NULL,

@@ -3,6 +3,7 @@
 -- Need to trim to remove whitespaces, or validator will fail it
 
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_procedure_icd10;
 CREATE TABLE fhir_trm.cs_procedure_icd10(
     code      VARCHAR NOT NULL,

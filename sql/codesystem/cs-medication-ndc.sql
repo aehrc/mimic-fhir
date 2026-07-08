@@ -1,6 +1,7 @@
 -- Medication NDC CodeSystem
 -- National Drug Codes will need to be mapped in future to a standard medication system (ie using rxnorm)
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_medication_ndc;
 CREATE TABLE fhir_trm.cs_medication_ndc(
     code      VARCHAR NOT NULL,

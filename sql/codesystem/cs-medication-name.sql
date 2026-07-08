@@ -1,6 +1,7 @@
 -- Medication name CodeSystem
 -- Medication names from the pharmacy and prescriptions table, used when no other identifier is available
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_medication_name;
 CREATE TABLE fhir_trm.cs_medication_name(
     code      VARCHAR NOT NULL,

@@ -1,6 +1,7 @@
 -- Medication formulary drug codes CodeSystem
 -- Codes will need to be mapped in future to a standard medication system (ie using rxnorm)
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_medication_formulary_drug_cd;
 CREATE TABLE fhir_trm.cs_medication_formulary_drug_cd(
     code      VARCHAR NOT NULL,

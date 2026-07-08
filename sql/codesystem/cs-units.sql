@@ -1,6 +1,7 @@
 -- Generate the unique set of units across all tables in MIMIC
 -- Potentially map to the fhir units codesystem - http://unitsofmeasure.org
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_units;
 CREATE TABLE fhir_trm.cs_units(
     code      VARCHAR NOT NULL,

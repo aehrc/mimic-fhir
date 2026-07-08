@@ -2,6 +2,7 @@
 -- Codes will need to be mapped to Snomed-CT: http://snomed.info/sct, 
 -- based on the US Core Encounter Type valueset: http://hl7.org/fhir/us/core/ValueSet-us-core-encounter-type.html
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_hcpcs_cd;
 CREATE TABLE fhir_trm.cs_hcpcs_cd(
     code      VARCHAR NOT NULL,

@@ -1,6 +1,7 @@
 -- Bodysite Codesystem
 -- Need to map out to SNOMED codes - http://hl7.org/fhir/R4/valueset-body-site.html
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_bodysite;
 CREATE TABLE fhir_trm.cs_bodysite(
     code      VARCHAR NOT NULL,

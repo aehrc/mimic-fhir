@@ -5,6 +5,7 @@
 --         So can swap to the fhir version when it is complete
 
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_diagnosis_icd9;
 CREATE TABLE fhir_trm.cs_diagnosis_icd9(
     code      VARCHAR PRIMARY KEY,

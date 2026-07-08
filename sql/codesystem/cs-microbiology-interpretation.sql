@@ -1,5 +1,6 @@
 -- Microbiology Interpretation Codesystem
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_microbiology_interpretation;
 CREATE TABLE fhir_trm.cs_microbiology_interpretation(
     code      VARCHAR NOT NULL,

@@ -243,6 +243,11 @@ The `bin/psql-export-trm.py` script can be used to generate terminology resource
 from the `fhir_trm` schema of mimic database. These resources can be used to update the MIMIC code systems and value sets defintions in MIMIC-IV IG 
 (`mimic-profile/input/resources`).
 
+Every concept in every generated CodeSystem carries a non-empty `display`. Where a code is already human-readable the
+display repeats the code; opaque codes show a richer term drawn from the MIMIC-IV source - the drug or product name for
+medication identifiers, and the documented expansion for the service and microbiology-interpretation abbreviations -
+falling back to the code where no such term exists.
+
 To update the resource generate the terminology tables in postgresql SQL first with `sql/create_fhir_terminology.sql`
 (or `sql/create_fhir_terminology.sql) and then run the script with the following command (replace the placeholders with the actual values):
 

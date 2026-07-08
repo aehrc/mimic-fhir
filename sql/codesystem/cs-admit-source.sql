@@ -1,6 +1,7 @@
 -- Admit source CodeSystem
 -- Codes will need to be mapped to match AdmitSource- http://hl7.org/fhir/R4/valueset-encounter-admit-source.html
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_admit_source;
 CREATE TABLE fhir_trm.cs_admit_source(
     code      VARCHAR NOT NULL,

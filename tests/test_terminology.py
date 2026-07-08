@@ -1,8 +1,5 @@
-import json
-import requests
 import logging
 import os
-import subprocess
 import pytest
 import time
 import pandas as pd
@@ -10,10 +7,7 @@ import pandas as pd
 from py_mimic_fhir.terminology import TerminologyMetaData
 import py_mimic_fhir.terminology as trm
 
-from fhir.resources.codesystem import CodeSystem, CodeSystemConcept
-from fhir.resources.valueset import ValueSet
-
-from py_mimic_fhir.lookup import (MIMIC_CODESYSTEMS, MIMIC_VALUESETS)
+from py_mimic_fhir.lookup import MIMIC_CODESYSTEMS
 
 
 def test_terminology_meta_data(db_conn):

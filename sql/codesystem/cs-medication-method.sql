@@ -1,6 +1,7 @@
 -- Medication method CodeSystem
 -- Could map to SNOMED codes - http://hl7.org/fhir/valueset-administration-method-codes.html
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_medication_method;
 CREATE TABLE fhir_trm.cs_medication_method(
     code      VARCHAR NOT NULL,

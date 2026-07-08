@@ -1,6 +1,7 @@
 -- Discharge disposition CodeSystem
 -- Codes will need to be mapped to match DischargeDisposition- http://hl7.org/fhir/R4/valueset-encounter-discharge-disposition.html
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_discharge_disposition;
 CREATE TABLE fhir_trm.cs_discharge_disposition(
     code      VARCHAR NOT NULL,

@@ -1,6 +1,7 @@
 -- Medication Frequency CodeSystem
 -- Map the frequency values to http://hl7.org/fhir/ValueSet/timing-abbreviation
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_medication_frequency;
 CREATE TABLE fhir_trm.cs_medication_frequency(
     code      VARCHAR NOT NULL,

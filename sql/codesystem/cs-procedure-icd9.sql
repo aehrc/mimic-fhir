@@ -2,6 +2,7 @@
 -- Only taking the codes used in procedure_icd versus all the codes in d_icd_procedures 
 -- Need to trim to remove whitespaces, or validator will fail it
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_procedure_icd9;
 CREATE TABLE fhir_trm.cs_procedure_icd9(
     code      VARCHAR NOT NULL,

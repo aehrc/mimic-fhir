@@ -2,6 +2,7 @@
 -- Could map to SNOMED routes - http://hl7.org/fhir/valueset-route-codes.html
 
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_medication_route;
 CREATE TABLE fhir_trm.cs_medication_route(
     code      VARCHAR NOT NULL,

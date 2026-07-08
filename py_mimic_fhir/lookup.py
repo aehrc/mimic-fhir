@@ -1,4 +1,5 @@
 # Constant lookups that are used throughout the package
+# Author: John Grimes
 MIMIC_FHIR_PROFILES = {
     'MimicCondition':
         {

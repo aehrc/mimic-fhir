@@ -1,5 +1,6 @@
 -- Microbiology Antibiotic Codesystem
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_microbiology_antibiotic;
 CREATE TABLE fhir_trm.cs_microbiology_antibiotic(
     code      VARCHAR NOT NULL,

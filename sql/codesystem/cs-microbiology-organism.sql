@@ -1,6 +1,7 @@
 -- Microbiology Organism CodeSystem
 
 
+-- Author: John Grimes
 DROP TABLE IF EXISTS fhir_trm.cs_microbiology_organism;
 CREATE TABLE fhir_trm.cs_microbiology_organism(
     code      VARCHAR NOT NULL,
