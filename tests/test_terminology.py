@@ -7,6 +7,8 @@ import pandas as pd
 from py_mimic_fhir.terminology import TerminologyMetaData
 import py_mimic_fhir.terminology as trm
 
+from fhir.resources.codesystem import CodeSystemConcept
+
 from py_mimic_fhir.lookup import MIMIC_CODESYSTEMS
 
 
@@ -197,6 +199,18 @@ def test_concepts_all_display_equal_code_detects_full_fallback():
     assert trm.concepts_all_display_equal_code(all_code) is True
     assert trm.concepts_all_display_equal_code(some_enriched) is False
     assert trm.concepts_all_display_equal_code([]) is False
+    # The generator exposes concepts as CodeSystemConcept models rather than
+    # dicts, so exercise that attribute-access path too (the production case).
+    model_all_code = [
+        CodeSystemConcept(code='A', display='A'),
+        CodeSystemConcept(code='B', display='B'),
+    ]
+    model_enriched = [
+        CodeSystemConcept(code='A', display='A'),
+        CodeSystemConcept(code='B', display='Beta'),
+    ]
+    assert trm.concepts_all_display_equal_code(model_all_code) is True
+    assert trm.concepts_all_display_equal_code(model_enriched) is False
 
 
 def test_generate_concept_emits_display_when_equal_to_code():
