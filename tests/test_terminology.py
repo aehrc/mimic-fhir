@@ -189,6 +189,16 @@ def test_codesystem_display_completeness(db_conn, meta, codesystem):
     )
 
 
+def test_concepts_all_display_equal_code_detects_full_fallback():
+    # FR-010 reporting helper: a system is a full fallback only when every
+    # concept repeats its code as the display; an enriched or empty system is not.
+    all_code = [{'code': 'A', 'display': 'A'}, {'code': 'B', 'display': 'B'}]
+    some_enriched = [{'code': 'A', 'display': 'A'}, {'code': 'B', 'display': 'Beta'}]
+    assert trm.concepts_all_display_equal_code(all_code) is True
+    assert trm.concepts_all_display_equal_code(some_enriched) is False
+    assert trm.concepts_all_display_equal_code([]) is False
+
+
 def test_generate_concept_emits_display_when_equal_to_code():
     # Guards the display=code case at the generator level: a staging row whose
     # display equals its code must still emit a display, not drop it.

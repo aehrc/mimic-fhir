@@ -49,10 +49,43 @@ def generate_all_terminology(args):
 
 
 def generate_codesystems(db_conn, meta, terminology_path):
+    fell_back = []
     for mimic_codesystem in MIMIC_CODESYSTEMS:
         logger.info(f'Generating CodeSystem: {mimic_codesystem}')
         codesystem = generate_codesystem(mimic_codesystem, db_conn, meta)
+        if concepts_all_display_equal_code(codesystem.concept):
+            fell_back.append(mimic_codesystem)
         write_terminology(codesystem, terminology_path)
+    report_display_fallback(fell_back)
+
+
+# Report which code systems fell back entirely to display = code because no
+# richer source or documented term was available, so the outcome is visible
+# rather than silent (FR-010).
+def report_display_fallback(fell_back):
+    logger.info(
+        f'{len(fell_back)} of {len(MIMIC_CODESYSTEMS)} CodeSystems use '
+        f'display = code for every concept (no richer source term available): '
+        f'{", ".join(fell_back) if fell_back else "none"}'
+    )
+
+
+# Read a concept field whether the concept is a plain dict (as built by
+# generate_concept) or a CodeSystemConcept model (as exposed by CodeSystem).
+def _concept_value(concept, field):
+    if isinstance(concept, dict):
+        return concept.get(field)
+    return getattr(concept, field, None)
+
+
+# Return True when a code system's concepts all repeat the code as the display,
+# i.e. no concept gained a richer term. An empty concept list is not a fallback.
+def concepts_all_display_equal_code(concepts):
+    concepts = concepts or []
+    return bool(concepts) and all(
+        _concept_value(concept, 'display') == _concept_value(concept, 'code')
+        for concept in concepts
+    )
 
 
 def generate_valuesets(db_conn, meta, terminology_path):
